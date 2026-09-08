@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CAPTCHA Security System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="grid"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+
+    <main class="page">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🛡️
+                </div>
+
+                <div>
+                    <h2>CAPTCHA<span>SEC</span></h2>
+
+                    <p>
+                        Intelligent Human Verification
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                SYSTEM ONLINE
+
+            </div>
+
+        </header>
+
+
+        <!-- MAIN -->
+
+        <section class="main-section">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="intro">
+
+                <div class="badge">
+
+                    <span>●</span>
+
+                    AI-ASSISTED SECURITY
+
+                </div>
+
+
+                <h1>
+
+                    Verify that
+                    <span>you're human.</span>
+
+                </h1>
+
+
+                <p class="description">
+
+                    Our intelligent CAPTCHA system combines
+                    dynamic challenges, hidden verification
+                    and behavioural analysis to detect
+                    suspicious automated activity.
+
+                </p>
+
+
+                <div class="security-points">
+
+
+                    <div class="point">
+
+                        <div class="point-icon">
+                            ↻
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Dynamic Challenges
+                            </strong>
+
+                            <p>
+                                A unique CAPTCHA is generated
+                                for every verification.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="point">
+
+                        <div class="point-icon">
+                            ◉
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Behaviour Analysis
+                            </strong>
+
+                            <p>
+                                Interaction patterns contribute
+                                to the security risk score.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="point">
+
+                        <div class="point-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Multi-Layer Protection
+                            </strong>
+
+                            <p>
+                                Multiple signals are combined
+                                before granting access.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="verification-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="small-label">
+                            SECURITY CHECK
+                        </span>
+
+                        <h2>
+                            Human Verification
+                        </h2>
+
+                    </div>
+
+
+                    <div class="secure-icon">
+                        🔒
+                    </div>
+
+                </div>
+
+
+                <div class="progress-line">
+                    <div></div>
+                </div>
+
+
+                <p class="instruction">
+
+                    Enter the characters shown below
+                    to continue.
+
+                </p>
+
+
+                <!-- CAPTCHA -->
+
+                <div class="captcha-wrapper">
+
+                    <div
+                        id="captchaText"
+                        class="captcha-text"
+                    >
+                        Loading...
+                    </div>
+
+
+                    <button
+                        id="refreshBtn"
+                        class="refresh-btn"
+                        type="button"
+                    >
+                        ↻
+                    </button>
+
+                </div>
+
+
+                <!-- FORM -->
+
+                <form id="captchaForm">
+
+
+                    <label for="captchaInput">
+                        CAPTCHA CODE
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span>⌕</span>
+
+                        <input
+                            type="text"
+                            id="captchaInput"
+                            maxlength="5"
+                            autocomplete="off"
+                            placeholder="Enter code"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- HONEYPOT -->
+
+                    <div class="honeypot">
+
+                        <label for="website">
+                            Website
+                        </label>
+
+                        <input
+                            type="text"
+                            id="website"
+                            autocomplete="off"
+                            tabindex="-1"
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="verify-btn"
+                    >
+
+                        <span>
+                            Verify Identity
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- BOT SIMULATION -->
+
+                <div class="bot-test">
+
+                    <div class="bot-test-title">
+
+                        <span>
+                            🧪
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Security Demonstration
+                            </strong>
+
+                            <p>
+                                Simulate automated bot behaviour
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="botSimulationBtn"
+                        class="bot-btn"
+                        type="button"
+                    >
+
+                        🤖 Run Bot Simulation
+
+                    </button>
+
+                </div>
+
+
+                <!-- RESULT -->
+
+                <div id="result"></div>
+
+
+                <!-- ANALYTICS -->
+
+                <div
+                    id="analytics"
+                    class="analytics"
+                >
+
+                    <div class="analytics-title">
+                        LIVE VERIFICATION ANALYTICS
+                    </div>
+
+
+                    <div class="analytics-grid">
+
+
+                        <div class="metric">
+
+                            <span>
+                                RESPONSE TIME
+                            </span>
+
+                            <strong id="responseMetric">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                MOUSE EVENTS
+                            </span>
+
+                            <strong id="mouseMetric">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                ATTEMPTS
+                            </span>
+
+                            <strong id="attemptMetric">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                HONEYPOT
+                            </span>
+
+                            <strong id="honeypotMetric">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-area">
+
+                        <div>
+
+                            <span>
+                                RISK SCORE
+                            </span>
+
+                            <strong id="riskScore">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            id="classification"
+                            class="classification"
+                        >
+                            WAITING
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="privacy">
+
+                    🔒 Verification processed securely.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ARCHITECTURE -->
+
+        <section class="security-section">
+
+
+            <div class="section-heading">
+
+                <span>
+                    SECURITY ARCHITECTURE
+                </span>
+
+                <h2>
+                    Multiple layers. One secure verification.
+                </h2>
+
+            </div>
+
+
+            <div class="architecture">
+
+
+                <div class="architecture-card">
+
+                    <div class="architecture-number">
+                        01
+                    </div>
+
+                    <div class="architecture-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        Dynamic CAPTCHA
+                    </h3>
+
+                    <p>
+                        Random challenges reduce
+                        predictability.
+                    </p>
+
+                </div>
+
+
+                <div class="connection">
+                    →
+                </div>
+
+
+                <div class="architecture-card">
+
+                    <div class="architecture-number">
+                        02
+                    </div>
+
+                    <div class="architecture-icon">
+                        🕵️
+                    </div>
+
+                    <h3>
+                        Hidden Verification
+                    </h3>
+
+                    <p>
+                        Honeypot fields identify
+                        automated form filling.
+                    </p>
+
+                </div>
+
+
+                <div class="connection">
+                    →
+                </div>
+
+
+                <div class="architecture-card">
+
+                    <div class="architecture-number">
+                        03
+                    </div>
+
+                    <div class="architecture-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        Behaviour Analysis
+                    </h3>
+
+                    <p>
+                        Interaction signals contribute
+                        to the risk score.
+                    </p>
+
+                </div>
+
+
+                <div class="connection">
+                    →
+                </div>
+
+
+                <div class="architecture-card">
+
+                    <div class="architecture-number">
+                        04
+                    </div>
+
+                    <div class="architecture-icon">
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Risk Decision
+                    </h3>
+
+                    <p>
+                        Suspicious requests are
+                        rejected.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+
+            <span>
+                CAPTCHA SECURITY SYSTEM
+            </span>
+
+            <span>
+                GROUP 101
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
