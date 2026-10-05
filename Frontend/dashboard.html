@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Security Dashboard</title>
+
+    <style>
+
+        body {
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            background:
+                #eef2f7;
+
+            padding:
+                30px;
+
+        }
+
+
+        h1 {
+
+            text-align:
+                center;
+
+        }
+
+
+        .cards {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        180px,
+                        1fr
+                    )
+                );
+
+            gap:
+                20px;
+
+            max-width:
+                1000px;
+
+            margin:
+                30px auto;
+
+        }
+
+
+        .card {
+
+            background:
+                white;
+
+            padding:
+                25px;
+
+            border-radius:
+                12px;
+
+            text-align:
+                center;
+
+            box-shadow:
+                0 5px 20px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.08
+                );
+
+        }
+
+
+        .number {
+
+            font-size:
+                32px;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        table {
+
+            width:
+                100%;
+
+            max-width:
+                1100px;
+
+            margin:
+                auto;
+
+            background:
+                white;
+
+            border-collapse:
+                collapse;
+
+        }
+
+
+        th,
+        td {
+
+            padding:
+                12px;
+
+            border-bottom:
+                1px solid #ddd;
+
+            text-align:
+                center;
+
+        }
+
+
+        th {
+
+            font-weight:
+                bold;
+
+        }
+
+
+        tr:hover {
+
+            background:
+                #f7f9fc;
+
+        }
+
+
+        h2 {
+
+            max-width:
+                1100px;
+
+            margin:
+                30px auto 15px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <h1>
+        CAPTCHA Security Dashboard
+    </h1>
+
+
+    <!-- =========================
+         SUMMARY CARDS
+    ========================== -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                Total
+            </h3>
+
+            <div
+                id="total"
+                class="number"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Humans
+            </h3>
+
+            <div
+                id="humans"
+                class="number"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Suspicious
+            </h3>
+
+            <div
+                id="suspicious"
+                class="number"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Avg Response
+            </h3>
+
+            <div
+                id="avgTime"
+                class="number"
+            >
+                0 ms
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         SECURITY EVENTS
+    ========================== -->
+
+    <h2>
+        Recent Security Events
+    </h2>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Time
+                </th>
+
+                <th>
+                    Risk
+                </th>
+
+                <th>
+                    Classification
+                </th>
+
+                <th>
+                    ML
+                </th>
+
+                <th>
+                    Result
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="logs">
+
+        </tbody>
+
+    </table>
+
+
+    <!-- =========================
+         DASHBOARD JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        async function loadDashboard() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/dashboard"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Dashboard API failed"
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Dashboard data:",
+                    data
+                );
+
+
+                /*
+                    =========================
+                    SUMMARY CARDS
+                    =========================
+                */
+
+
+                document.getElementById(
+                    "total"
+                ).textContent =
+                    data.total ?? 0;
+
+
+                document.getElementById(
+                    "humans"
+                ).textContent =
+                    data.humans ?? 0;
+
+
+                document.getElementById(
+                    "suspicious"
+                ).textContent =
+                    data.suspicious ?? 0;
+
+
+                const averageResponse =
+                    Number(
+                        data.averageResponseTime
+                    ) || 0;
+
+
+                document.getElementById(
+                    "avgTime"
+                ).textContent =
+                    Math.round(
+                        averageResponse
+                    ) + " ms";
+
+
+                /*
+                    =========================
+                    SECURITY LOGS
+                    =========================
+                */
+
+
+                const logs =
+                    document.getElementById(
+                        "logs"
+                    );
+
+
+                logs.innerHTML = "";
+
+
+                if (
+                    !data.recentLogs ||
+                    data.recentLogs.length === 0
+                ) {
+
+                    logs.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                            >
+                                No security events yet
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                /*
+                    Display newest events first
+                */
+
+
+                data.recentLogs.forEach(
+                    log => {
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        /*
+                            Time
+                        */
+
+                        const time =
+                            log.timestamp
+                                ? new Date(
+                                    log.timestamp
+                                ).toLocaleTimeString()
+                                : "-";
+
+
+                        /*
+                            Risk
+                        */
+
+                        const risk =
+                            log.riskScore !== null &&
+                            log.riskScore !== undefined
+                                ? log.riskScore +
+                                  "/100"
+                                : "-";
+
+
+                        /*
+                            Classification
+                        */
+
+                        const classification =
+                            log.classification ||
+                            "-";
+
+
+                        /*
+                            ML
+                        */
+
+                        let ml = "-";
+
+
+                        if (
+                            log.mlPrediction === 1
+                        ) {
+
+                            ml = "BOT";
+
+                        }
+                        else if (
+                            log.mlPrediction === 0
+                        ) {
+
+                            ml = "HUMAN";
+
+                        }
+
+
+                        /*
+                            Result
+                        */
+
+                        const result =
+                            log.success
+                                ? "ALLOWED"
+                                : "BLOCKED";
+
+
+                        /*
+                            Create row
+                        */
+
+                        row.innerHTML = `
+
+                            <td>
+                                ${time}
+                            </td>
+
+                            <td>
+                                ${risk}
+                            </td>
+
+                            <td>
+                                ${classification}
+                            </td>
+
+                            <td>
+                                ${ml}
+                            </td>
+
+                            <td>
+                                ${result}
+                            </td>
+
+                        `;
+
+
+                        logs.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Dashboard loading failed:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+            =========================
+            INITIAL LOAD
+            =========================
+        */
+
+        loadDashboard();
+
+
+        /*
+            =========================
+            AUTO REFRESH
+            =========================
+
+            Dashboard refreshes every
+            3 seconds.
+        */
+
+        setInterval(
+            loadDashboard,
+            3000
+        );
+
+    </script>
+
+
+</body>
+
+</html>
