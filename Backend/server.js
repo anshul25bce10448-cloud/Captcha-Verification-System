@@ -1,4 +1,4 @@
-```js
+
 const express = require("express");
 
 const cors = require("cors");
@@ -981,4 +981,3 @@ if (require.main === module) {
 
 
 module.exports = app;
-```
