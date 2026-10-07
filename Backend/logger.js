@@ -1,36 +1,23 @@
-const fs =
-    require("fs");
+const fs = require("fs");
+const path = require("path");
 
-const path =
-    require("path");
+const isVercel = !!process.env.VERCEL;
 
+const logDirectory = isVercel
+    ? "/tmp"
+    : path.join(__dirname, "../logs");
 
-const logDirectory =
-    path.join(
-        __dirname,
-        "../logs"
-    );
-
-
-const logFile =
-    path.join(
-        logDirectory,
-        "security.jsonl"
-    );
+const logFile = path.join(
+    logDirectory,
+    "security.jsonl"
+);
 
 
-if (
-    !fs.existsSync(
-        logDirectory
-    )
-) {
-
-    fs.mkdirSync(
-        logDirectory,
-        {
-            recursive: true
-        }
-    );
+// Create logs directory only when needed
+if (!fs.existsSync(logDirectory)) {
+    fs.mkdirSync(logDirectory, {
+        recursive: true
+    });
 }
 
 
@@ -39,8 +26,7 @@ function logSecurityEvent(event) {
     const entry = {
 
         timestamp:
-            new Date()
-                .toISOString(),
+            new Date().toISOString(),
 
         ...event
 
@@ -51,8 +37,7 @@ function logSecurityEvent(event) {
 
         logFile,
 
-        JSON.stringify(entry)
-        + "\n"
+        JSON.stringify(entry) + "\n"
 
     );
 }
@@ -60,10 +45,7 @@ function logSecurityEvent(event) {
 
 function readLogs() {
 
-    if (
-        !fs.existsSync(logFile)
-    ) {
-
+    if (!fs.existsSync(logFile)) {
         return [];
     }
 
@@ -75,10 +57,7 @@ function readLogs() {
         );
 
 
-    if (
-        !content.trim()
-    ) {
-
+    if (!content.trim()) {
         return [];
     }
 
@@ -90,13 +69,12 @@ function readLogs() {
 
             try {
 
-                return JSON.parse(
-                    line
-                );
+                return JSON.parse(line);
 
             } catch {
 
                 return null;
+
             }
 
         })
