@@ -52,8 +52,7 @@ app.use(
 app.use(
     express.static(
         path.join(
-            process.cwd(),
-            "frontend"
+            __dirname, "../frontend"
         )
     )
 );
