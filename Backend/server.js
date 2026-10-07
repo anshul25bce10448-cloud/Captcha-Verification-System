@@ -203,15 +203,12 @@ app.get(
         res.json({
 
             id:
-
                 id,
 
             captchaImage:
-
                 captchaImage,
 
             challengeType:
-
                 challenge
 
         });
@@ -224,6 +221,7 @@ app.get(
    BEHAVIOURAL CHALLENGE
    ============================================================ */
 
+/*
 app.post(
     "/api/challenge",
     (req, res) => {
@@ -286,6 +284,7 @@ app.post(
 
     }
 );
+*/
 
 
 /* ============================================================
@@ -866,23 +865,18 @@ app.get(
             res.json({
 
                 total:
-
                     total,
 
                 humans:
-
                     humans,
 
                 suspicious:
-
                     suspicious,
 
                 averageResponseTime:
-
                     averageResponseTime,
 
                 recentLogs:
-
                     securityLogs
                         .slice(-15)
                         .reverse()
@@ -970,10 +964,19 @@ app.get(
    ============================================================ */
 
 if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}`);
-    });
+
+    app.listen(
+        PORT,
+        () => {
+
+            console.log(
+                `Server running on http://localhost:${PORT}`
+            );
+
+        }
+    );
+
 }
 
+
 module.exports = app;
-);
