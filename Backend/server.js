@@ -1,3 +1,4 @@
+```js
 const express = require("express");
 
 const cors = require("cors");
@@ -49,11 +50,17 @@ app.use(
 );
 
 
+/*
+ * IMPORTANT:
+ * GitHub/Vercel is case-sensitive.
+ * The actual folder is "Frontend", not "frontend".
+ */
+
 app.use(
     express.static(
         path.join(
             process.cwd(),
-            "frontend"
+            "Frontend"
         )
     )
 );
@@ -800,6 +807,7 @@ app.get(
 
                         log.success ===
                             true
+
                 ).length;
 
 
@@ -819,6 +827,7 @@ app.get(
 
                         log.event ===
                             "BOT_SIMULATION"
+
                 ).length;
 
 
@@ -919,13 +928,13 @@ app.get(
     "/dashboard",
     (req, res) => {
 
-       res.sendFile(
-    path.join(
-        process.cwd(),
-        "frontend",
-        "dashboard.html"
-    )
-);
+        res.sendFile(
+            path.join(
+                process.cwd(),
+                "Frontend",
+                "dashboard.html"
+            )
+        );
 
     }
 );
@@ -940,12 +949,12 @@ app.get(
     (req, res) => {
 
         res.sendFile(
-    path.join(
-        process.cwd(),
-        "frontend",
-        "index.html"
-    )
-);
+            path.join(
+                process.cwd(),
+                "Frontend",
+                "index.html"
+            )
+        );
 
     }
 );
@@ -970,4 +979,6 @@ if (require.main === module) {
 
 }
 
+
 module.exports = app;
+```
