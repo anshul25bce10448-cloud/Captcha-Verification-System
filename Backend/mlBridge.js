@@ -1,3 +1,4 @@
+
 const {
     spawn
 } = require("child_process");
@@ -11,10 +12,19 @@ function predictWithML(data) {
     return new Promise(
         (resolve, reject) => {
 
+            /*
+             * IMPORTANT:
+             *
+             * The actual folder in the repository is
+             * "ML" with capital letters.
+             *
+             * Vercel/Linux is case-sensitive.
+             */
+
             const scriptPath =
                 path.join(
                     __dirname,
-                    "../ml/predict.py"
+                    "../ML/predict.py"
                 );
 
 
@@ -47,6 +57,16 @@ function predictWithML(data) {
 
                     errorOutput +=
                         chunk.toString();
+
+                }
+            );
+
+
+            python.on(
+                "error",
+                error => {
+
+                    reject(error);
 
                 }
             );
@@ -87,6 +107,7 @@ function predictWithML(data) {
                     ) {
 
                         reject(error);
+
                     }
 
                 }
