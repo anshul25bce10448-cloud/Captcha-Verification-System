@@ -919,17 +919,13 @@ app.get(
     "/dashboard",
     (req, res) => {
 
-        res.sendFile(
-
-            path.join(
-
-                __dirname,
-
-                "../frontend/dashboard.html"
-
-            )
-
-        );
+       res.sendFile(
+    path.join(
+        process.cwd(),
+        "frontend",
+        "dashboard.html"
+    )
+);
 
     }
 );
@@ -944,16 +940,12 @@ app.get(
     (req, res) => {
 
         res.sendFile(
-
-            path.join(
-
-                __dirname,
-
-                "../frontend/index.html"
-
-            )
-
-        );
+    path.join(
+        process.cwd(),
+        "frontend",
+        "index.html"
+    )
+);
 
     }
 );
@@ -977,6 +969,5 @@ if (require.main === module) {
     );
 
 }
-
 
 module.exports = app;
